@@ -7,15 +7,18 @@ Playable Postcard
 
 let config = {
     type: Phaser.AUTO,
-    width: 640,
-    height: 480,
+    width: 800,
+    height: 450,
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: true,
+            gravity: {
+                y: 1000
+            },
         }
     },
     scene: [ Theater ]
-}
+};
 
-let game = new Phaser.Game(config)
+let game = new Phaser.Game(config);
