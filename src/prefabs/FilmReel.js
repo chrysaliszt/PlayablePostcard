@@ -1,11 +1,13 @@
 class FilmReel extends Phaser.Physics.Arcade.Sprite {
+    scene;
+    name;
     initX;
     initY;
-    name;
 
     constructor(scene, x, y, name) {
         super(scene, x, y, 'filmReelSprite');
 
+        this.scene = scene;
         this.name = name;
         this.initX = x;
         this.initY = y;
@@ -25,14 +27,36 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
         this.on('dragstart', (pointer) => {
             console.log(this.name);
             this.setDirectControl(true);
+            this.setImmovable(true);
         });
 
         this.on('drag', (pointer, dragX, dragY) => {
-            this.setPosition(dragX, dragY);
+            this.setPosition(pointer.worldX, pointer.worldY);
         });
 
-        this.on('dragend', (pointer) => {
+        this.on('drop', (pointer, dropZone) => {
+            this.disableDrag();
+            this.enableDirectControl();
+            this.scene.tweens.add({
+                targets: this,
+                callbackScope: this,
+                x: dropZone.x, 
+                y: dropZone.y - this.height / 2,
+                duration: 200,
+                ease: 'Sine.easeInOut',
+                completeDelay: 100,
+                onComplete: function () {
+                    this.enableDrag();
+                    this.disableDirectControl();
+                    dropZone.insertFilmReel(this.name);
+                },
+            });
+
+        });
+
+        this.on('dragend', (pointer, dropped) => {
             this.setDirectControl(false);
+            this.setImmovable(false);
         });
     }
 
