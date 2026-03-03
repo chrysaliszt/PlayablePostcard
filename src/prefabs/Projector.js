@@ -1,5 +1,5 @@
 class Projector extends Phaser.Physics.Arcade.Sprite {
-    isPlayingFilmReel = false;
+    currentFilmScene;
     currentFilmReelName;
 
     constructor(scene, x, y) {
@@ -9,8 +9,8 @@ class Projector extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
 
         this.setOrigin(0.5, 1.0);
-        this.body.setAllowGravity(false);
         this.setScale(1.2);
+        this.body.setAllowGravity(false);
 
         this.setInteractive();
         this.input.dropZone = true;
@@ -24,6 +24,7 @@ class Projector extends Phaser.Physics.Arcade.Sprite {
         this.isPlayingFilmReel = true;
         this.currentFilmReelName = filmReelName;
         console.log(`current projector film: ${this.getCurrentFilmReel()}`);
+        this.emit('startMovie', [this.currentFilmReelName]);
     }
 
     removeFilmReel() {

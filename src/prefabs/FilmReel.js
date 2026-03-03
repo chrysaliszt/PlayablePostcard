@@ -7,14 +7,17 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, name) {
         super(scene, x, y, 'filmReelSprite');
 
+        // save variables
         this.scene = scene;
         this.name = name;
         this.initX = x;
         this.initY = y;
 
+        // add the sprite to the parent scene
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
+        // set the physics body
         this.setOrigin(0.5, 0.5);
         this.setCollideWorldBounds(true, 0.25, 0.25);
         this.setBounce(0.9, 0.9);
@@ -22,18 +25,22 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
         this.setDrag(0.4);
         this.body.setCircle(this.width / 2);
 
+        // pointer interactions
         this.setInteractive({ draggable: true });
 
+        // when starting to drag the film reel, remove standard physics and take direct control
         this.on('dragstart', (pointer) => {
             console.log(this.name);
             this.setDirectControl(true);
             this.setImmovable(true);
         });
 
+        // while dragging, move the film reel to the pointer
         this.on('drag', (pointer, dragX, dragY) => {
             this.setPosition(pointer.worldX, pointer.worldY);
         });
 
+        // if the film reel has been dropped onto a target zone, smoothly move it and insert into the target
         this.on('drop', (pointer, dropZone) => {
             this.disableDrag();
             this.enableDirectControl();
@@ -51,9 +58,9 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
                     dropZone.insertFilmReel(this.name);
                 },
             });
-
         });
 
+        // when drag ends, resume standard physics control
         this.on('dragend', (pointer, dropped) => {
             this.setDirectControl(false);
             this.setImmovable(false);

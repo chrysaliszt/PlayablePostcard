@@ -18,7 +18,7 @@ let config = {
             },
         }
     },
-    scene: [ Theater ]
+    scene: [ Theater, Movie1 ]
 };
 
 let game = new Phaser.Game(config);

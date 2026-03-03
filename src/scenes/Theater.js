@@ -1,4 +1,5 @@
 class Theater extends Phaser.Scene {
+    currentMovieScene;
     filmReels;
     projector;
 
@@ -16,7 +17,9 @@ class Theater extends Phaser.Scene {
     create() {
         // add projector
         this.projector = new Projector(this, this.game.config.width / 2, this.game.config.height);
-        
+        // listen to startFilm event
+        this.projector.on('startMovie', this.startMovie, this);
+
         // add film reels
         this.filmReels = this.add.group();
         for(let i = 0; i < 3; i++) {
@@ -24,7 +27,7 @@ class Theater extends Phaser.Scene {
                 this, 
                 (this.game.config.width / 8) * (i + 1), 
                 this.game.config.height / 2, 
-                `film ${i}`
+                `movie${i}Scene`
             );
             this.filmReels.add(filmReel);
         }
@@ -33,11 +36,20 @@ class Theater extends Phaser.Scene {
                 this, 
                 (this.game.config.width / 8) * (i + 1), 
                 this.game.config.height / 2, 
-                `film ${i}`
+                `movie${i}Scene`
             );
             this.filmReels.add(filmReel);
         }
         // add collider between film reels
         this.physics.add.collider(this.filmReels);
+    }
+
+    startMovie(filmName) {
+        if(this.currentMovieScene) {
+            this.scene.stop(`${this.currentMovieScene}`);
+        }
+
+        this.currentMovieScene = filmName;
+        this.scene.launch(`${this.currentMovieScene}`);
     }
 }
