@@ -22,7 +22,7 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
         // set the physics body
         this.setOrigin(0.5, 0.5);
         this.setCollideWorldBounds(true, 0.25, 0.25);
-        this.setBounce(0.9, 0.9);
+        this.setBounce(0.5, 0.5);
         this.setDamping(true);
         this.setDrag(0.4);
         this.body.setCircle(this.width / 2);
