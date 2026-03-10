@@ -10,6 +10,7 @@ class Theater extends Phaser.Scene {
     preload() {
         this.load.path = './assets/';
 
+        this.load.image('theaterSprite', 'TEMP-theater.png');
         this.load.image('filmReelSprite', 'TEMP-film-reel.png');
         this.load.image('projectorSprite', 'TEMP-projector.png');
         
@@ -17,6 +18,9 @@ class Theater extends Phaser.Scene {
     }
 
     create() {
+        // add background
+        this.add.image(0.0, 0.0, 'theaterSprite').setOrigin(0.0, 0.0);
+
         // add projector
         this.projector = new Projector(this, this.game.config.width / 2, this.game.config.height);
         // listen to startFilm event
