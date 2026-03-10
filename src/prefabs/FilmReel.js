@@ -3,8 +3,9 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
     name;
     initX;
     initY;
+    sfx;
 
-    constructor(scene, x, y, name) {
+    constructor(scene, x, y, name, sfx) {
         super(scene, x, y, 'filmReelSprite');
 
         // save variables
@@ -12,6 +13,7 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
         this.name = name;
         this.initX = x;
         this.initY = y;
+        this.sfx = sfx;
 
         // add the sprite to the parent scene
         scene.add.existing(this);
@@ -33,6 +35,9 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
             console.log(this.name);
             this.setDirectControl(true);
             this.setImmovable(true);
+
+            // play sfx
+            this.sfx.play();
         });
 
         // while dragging, move the film reel to the pointer
@@ -55,6 +60,7 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
                 onComplete: function () {
                     this.enableDrag();
                     this.disableDirectControl();
+                    this.sfx.play();
                     dropZone.insertFilmReel(this.name);
                 },
             });

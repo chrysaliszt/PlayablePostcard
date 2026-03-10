@@ -11,6 +11,8 @@ class Start extends Phaser.Scene {
 
         this.load.image('filmReelSprite', 'TEMP-film-reel.png');
         this.load.image('projectorSprite', 'TEMP-projector.png');
+
+        this.load.audio('filmReelSFX', 'film-reel-sfx.wav');
     }
 
     create() {
@@ -19,12 +21,15 @@ class Start extends Phaser.Scene {
         // listen to startFilm event
         this.projector.on('startMovie', this.startMovie, this);
 
+        // add film reel sfx
+        const filmReelSFX = this.sound.add('filmReelSFX');
         // add start film reel
         let filmReel = new FilmReel(
             this, 
             this.game.config.width * 0.5, 
             this.game.config.height * 0.65, 
-            `theaterScene`
+            `theaterScene`,
+            filmReelSFX
         );
         filmReel.setAllowGravity(false);
 
@@ -44,7 +49,7 @@ class Start extends Phaser.Scene {
         this.add.text(
             game.config.width * 0.5, 
             game.config.height * 0.35, 
-            '  INSERT FILM...', 
+            ' INSERT FILM...', 
             textConfig
         ).setOrigin(0.5)
     }
