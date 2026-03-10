@@ -91,4 +91,8 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
     disableDirectControl() {
         this.setDirectControl(false);
     }
+
+    setAllowGravity(allow) {
+        this.body.setAllowGravity(allow);
+    }
 }

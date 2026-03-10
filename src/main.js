@@ -2,7 +2,13 @@
 Kait Srivastav
 Chrysa Nguyen
 CMPM 120
-Playable Postcard
+Playable Postcard: 
+Hours spent: 20
+Phaser components used:
+    - Event emitter/listeners
+    - Tweens
+    - Input: drag and drop
+    - Physics sprites
 */
 
 let config = {
@@ -18,7 +24,7 @@ let config = {
             },
         }
     },
-    scene: [ Theater, Movie1 ]
+    scene: [ Start, Theater, Movie1 ]
 };
 
 let game = new Phaser.Game(config);
