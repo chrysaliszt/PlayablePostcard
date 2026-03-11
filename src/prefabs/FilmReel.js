@@ -60,6 +60,7 @@ class FilmReel extends Phaser.Physics.Arcade.Sprite {
                 onComplete: function () {
                     this.enableDrag();
                     this.disableDirectControl();
+                    this.setImmovable(false);
                     this.sfx.play();
                     dropZone.insertFilmReel(this.name);
                 },

@@ -23,7 +23,7 @@ class Theater extends Phaser.Scene {
         this.add.image(0.0, 0.0, 'theaterSprite').setOrigin(0.0, 0.0);
 
         // add projector
-        this.projector = new Projector(this, this.game.config.width / 2, this.game.config.height);
+        this.projector = new Projector(this, this.game.config.width * 0.5, this.game.config.height * 0.8);
         // listen to startFilm event
         this.projector.on('startMovie', this.startMovie, this);
 
@@ -55,8 +55,8 @@ class Theater extends Phaser.Scene {
         this.physics.add.collider(this.filmReels);
 
         // add shelf bodies
-        const SHELF_WIDTH = 275;
-        const SHELF_HEIGHT = 150;
+        const SHELF_WIDTH = 275.0;
+        const SHELF_HEIGHT = 150.0;
         let shelfLeft = this.physics.add.staticBody(
             0.0, 
             this.game.config.height - SHELF_HEIGHT,
@@ -72,9 +72,20 @@ class Theater extends Phaser.Scene {
         );
         shelfRight.checkCollision.down = false;
 
+        const MIDDLE_SHELF_WIDTH = 130.0;
+        const MIDDLE_SHELF_HEIGHT = 90.0;
+        let shelfMiddle = this.physics.add.staticBody(
+            this.game.config.width * 0.5 - MIDDLE_SHELF_WIDTH * 0.5, 
+            this.game.config.height - MIDDLE_SHELF_HEIGHT,
+            MIDDLE_SHELF_WIDTH,
+            MIDDLE_SHELF_HEIGHT
+        );
+        shelfLeft.checkCollision.down = false;
+
         // add shelf-reels one-way collision
         this.physics.add.collider(this.filmReels, shelfLeft);
         this.physics.add.collider(this.filmReels, shelfRight);
+        this.physics.add.collider(this.filmReels, shelfMiddle);
 
         // add camera flash on scene start
         this.cameras.main.flash(800, 155, 150, 150);
