@@ -1,6 +1,4 @@
 class Start extends Phaser.Scene {
-    filmReels;
-    projector;
 
     constructor() {
         super('startScene');
@@ -51,7 +49,14 @@ class Start extends Phaser.Scene {
             game.config.height * 0.35, 
             ' INSERT FILM...', 
             textConfig
-        ).setOrigin(0.5)
+        ).setOrigin(0.5);
+
+        // add camera flash on scene start
+        this.cameras.main.flash(800, 155, 150, 150);
+
+        // add camera post effects
+        this.cameras.main.postFX.addVignette(0.5, 0.5, 1.0, 0.2);
+        this.cameras.main.postFX.addTiltShift(0.4, 0.1, 0.05);
     }
 
     startMovie() {

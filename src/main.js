@@ -9,6 +9,7 @@ Phaser components used:
     - Tweens
     - Input: drag and drop
     - Physics sprites
+    - Physics static bodies
 */
 
 let config = {

@@ -2,6 +2,7 @@ class Theater extends Phaser.Scene {
     currentMovieScene;
     filmReels;
     projector;
+    shelves;
 
     constructor() {
         super('theaterScene');
@@ -61,19 +62,26 @@ class Theater extends Phaser.Scene {
             this.game.config.height - SHELF_HEIGHT,
             SHELF_WIDTH,
             SHELF_HEIGHT
-        )
+        );
         shelfLeft.checkCollision.down = false;
         let shelfRight = this.physics.add.staticBody(
             this.game.config.width * 0.975 - SHELF_WIDTH, 
             this.game.config.height - SHELF_HEIGHT,
             SHELF_WIDTH,
             SHELF_HEIGHT
-        )
+        );
         shelfRight.checkCollision.down = false;
 
         // add shelf-reels one-way collision
         this.physics.add.collider(this.filmReels, shelfLeft);
         this.physics.add.collider(this.filmReels, shelfRight);
+
+        // add camera flash on scene start
+        this.cameras.main.flash(800, 155, 150, 150);
+
+        // add camera post effects
+        this.cameras.main.postFX.addVignette(0.5, 0.5, 1.0, 0.2);
+        this.cameras.main.postFX.addTiltShift(0.4, 0.1, 0.05);
     }
 
     startMovie(filmName) {
